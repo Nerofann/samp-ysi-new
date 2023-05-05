@@ -1,0 +1,31 @@
+{
+	"user": "Fani",
+	"repo": "samp-ysi",
+	"entry": "gamemodes/tkk.pwn",
+	"output": "gamemodes/tkk.amx",
+	"dependencies": [
+		"pawn-lang/samp-stdlib",
+		"pawn-lang/YSI-Includes@5.x"
+	],
+	"local": true,
+	"build": {
+		"includes": ["libs", "include"],
+		"constants": {
+			"MAX_PLAYERS": "50",
+			"YSI_NO_OPTIMISATION_MESSAGE": "",
+			"YSI_NO_VERSION_CHECK": ""
+		}
+	},
+	"runtime": {
+		"version": "0.3.7",
+		"mode": "server",
+		"lanmode": true,
+		"rcon_password": "admins",
+		"port": 7777,
+		"gamemodetext": "Test server baru",
+		"timestamp": true,
+		"language": "Bahasa Indonesia",
+		"filterscripts": ["buy-vehicles"],
+		"plugins": ["mysql", "sscanf", "streamer"]
+	}
+}

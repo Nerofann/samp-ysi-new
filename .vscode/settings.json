@@ -1,0 +1,9 @@
+{
+    "pawn.compileOptions": [
+        "-d1",
+        "-O1",
+        "-(",
+        "-;"
+    ],
+    "pawn.compilerPath": "C:\\SAMP SERVER\\samp-ysi\\pawno"
+}

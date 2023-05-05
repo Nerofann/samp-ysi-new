@@ -1,0 +1,18 @@
+{
+	"user": "Nerofann",
+	"repo": "-",
+	"tag": "0.0.1",
+	"entry": "buy-vehicles.pwn",
+	"output": "../buy-vehicles.amx",
+	"dependencies": [
+		"pawn-lang/samp-stdlib"
+	],
+	"build": {
+		"includes": ["../../include", "../database", "../setup"],
+		"constants": {
+			"MAX_PLAYERS": "50",
+			"YSI_NO_OPTIMISATION_MESSAGE": "",
+			"YSI_NO_VERSION_CHECK": ""
+		}
+	}
+}
