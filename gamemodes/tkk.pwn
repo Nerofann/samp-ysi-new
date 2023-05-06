@@ -23,6 +23,7 @@
 #include "../modules/command/command.pwn"
 
 //CALLBACK
+#include "../modules/callback/player_callback.pwn"
 #include "../modules/callback/server_object_callback.pwn"
 
 //Dialog Response
@@ -32,15 +33,13 @@ main()
 {
 	// write code here and run "sampctl build" to compile
 	// then run "sampctl run" to run it
-	Mod1_info();
-	Mod2_info();
 	CekConnection();
+	LoadObject();
 }
 
 public OnGameModeInit()
 {
-    mysql_tquery(g_SQL, "SELECT * FROM `server_object` WHERE `visible` = 1", "LoadServerObject");
-	// return 1;
+	return 1;
 }
 
 public OnPlayerConnect(playerid)

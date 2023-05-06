@@ -2,6 +2,11 @@
 
 //Callback for server object
 
+stock LoadObject(){
+    mysql_tquery(g_SQL, "SELECT * FROM `server_object` WHERE `visible` = 1", "LoadServerObject");
+    return 1;
+}
+
 forward LoadServerObject(); 
 public LoadServerObject()
 {
