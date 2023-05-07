@@ -27,7 +27,6 @@ public OnFilterScriptInit()
     connect_db();
 
     //Load ServerObject
-    mysql_tquery(SQL, "SELECT * FROM `server_object` WHERE `visible` = 1", "LoadServerObject");
     return 1;
 }
 

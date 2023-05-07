@@ -25,7 +25,7 @@
 		"gamemodetext": "Test server baru",
 		"timestamp": true,
 		"language": "Bahasa Indonesia",
-		"filterscripts": ["buy-vehicles"],
+		"filterscripts": [],
 		"plugins": ["mysql", "sscanf", "streamer"]
 	}
 }

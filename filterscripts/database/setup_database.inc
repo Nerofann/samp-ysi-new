@@ -3,10 +3,10 @@
 */
 
 #include <a_mysql>
-#define HOST    "localhost"
-#define USER    "root"
-#define PASS    ""
-#define DB      "samp_server"
+#define HOST    "153.92.11.27"
+#define USER    "n1578212_fani-react-app"
+#define PASS    "Males230104"
+#define DB      "n1578212_fani-react-app"
 
 // COLOR
 #define COLOR_WHITE     0xFFFFFFFF
