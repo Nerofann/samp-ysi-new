@@ -27,6 +27,10 @@ main()
 	// then run "sampctl run" to run it
 	CekConnection();
 	LoadObject();
+	if(fexist("userdata/Fani_Annur.ini")){
+		printf("%s", "Ada");
+	}
+	print("test");
 }
 
 static stock CekConnection()
@@ -46,13 +50,15 @@ static stock CekConnection()
 
 public OnGameModeInit()
 {
-	return 1;
+	
+	// return 1;
 }
 
 public OnPlayerConnect(playerid)
 {
 	//login
 	Cek_akun(playerid);
+	
 	return 1;
 }	
 
@@ -100,6 +106,13 @@ stock getVehicleName(modelid)
     format(string, sizeof string, "%s", VehicleNames[modelid - 400]);
     return string;
 }
+
+stock get_user_path()
+{
+	static path[255];
+	format(path, sizeof path, PATH_USER_FILE "%s.ini", "Fani_Annur");
+	return path;
+} 
 
 public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {

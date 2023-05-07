@@ -2,18 +2,13 @@
 
 //MySQL
 new MySQL: g_SQL;
-#define DB_PATH     "../database/mysql_setting.ini"
-#define MYSQL_HOST  "153.92.11.27"
-#define MYSQL_USER  "n1578212_fani-react-app"
-#define MYSQL_PASS  "Males230104"
-#define MYSQL_DB    "n1578212_fani-react-app"
-
-//Localhost
-// #define MYSQL_HOST  "localhost"
-// #define MYSQL_USER  "root"
-// #define MYSQL_PASS  ""
-// #define MYSQL_DB    "samp_server"
-#define SALT 		""
+#define DB_PATH     	"../database/mysql_setting.ini"
+#define MYSQL_HOST  	"153.92.11.27"
+#define MYSQL_USER  	"n1578212_fani-react-app"
+#define MYSQL_PASS  	"Males230104"
+#define MYSQL_DB    	"n1578212_fani-react-app"
+#define SALT 			""
+#define PATH_USER_FILE	"../scriptfiles/userdata/"
 
 //COLOR asc
 #define COLOR_WHITE 	0xFFFFFFFF
