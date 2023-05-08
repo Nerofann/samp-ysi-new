@@ -1,11 +1,14 @@
+//Public Function
+#include "../modules/public/public_function.pwn"
+
 //Player module
 #include "../modules/player/player.pwn"
 #include "../modules/player/callback.pwn"
 #include "../modules/player/command.pwn"
 
-//auth module
-#include "../modules/auth/auth.pwn"
-#include "../modules/auth/callback.pwn"
+// //auth module
+// #include "../modules/auth/auth.pwn"
+// #include "../modules/auth/callback.pwn"
 
 //Server Object module
 #include "../modules/server_object/server_object.pwn"

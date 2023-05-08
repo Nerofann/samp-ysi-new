@@ -26,39 +26,25 @@ main()
 	// write code here and run "sampctl build" to compile
 	// then run "sampctl run" to run it
 	CekConnection();
-	LoadObject();
-	if(fexist("userdata/Fani_Annur.ini")){
-		printf("%s", "Ada");
-	}
-	print("test");
-}
-
-static stock CekConnection()
-{
-    new MySQLOpt: option_id = mysql_init_options();
-    mysql_set_option(option_id, AUTO_RECONNECT, true);
-    g_SQL = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB, option_id);
-    if(g_SQL == MYSQL_INVALID_HANDLE || mysql_errno(g_SQL) != 0){
-        printf("[MySQL] Failed to connect");
-        SendRconCommand("exit");
-        return 0;
-    }
-
-    printf("[MySQL] Connection succesfully");
-    return 1;
 }
 
 public OnGameModeInit()
 {
-	
 	// return 1;
 }
 
 public OnPlayerConnect(playerid)
 {
+	LoadObject();
+
 	//login
-	Cek_akun(playerid);
-	
+	pInfo[playerid][logged_in]	= false;
+	progressLogin[player_id]=0;
+    GetPlayerName(playerid, pInfo[playerid][player_name], MAX_PLAYER_NAME);
+	static query[120];
+	mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM `view_login_in_game` where nama = '%e' LIMIT 1", pInfo[playerid][player_name]);
+	mysql_tquery(g_SQL, query, "onPlayerDataCheck", "i", playerid);
+
 	return 1;
 }	
 
@@ -74,95 +60,57 @@ public OnPlayerDisconnect(playerid, reason)
 	return 1;
 }
 
-static stock SavePlayerData(playerid)
-{
-	//Save player data jika keadaan sudah login / sudah bermain
-	if(pInfo[playerid][logged_in]){
-		new query[255];
-		GetPlayerPos(playerid, Float:pInfo[playerid][pos_x], Float:pInfo[playerid][pos_y], Float:pInfo[playerid][pos_z]);
-		mysql_format(g_SQL, query, sizeof(query), "UPDATE `karakter` SET `pos_x`=%f, `pos_y`=%f, `pos_z`=%f, `skin`=%i WHERE `nama`='%e'", 
-			pInfo[playerid][pos_x], 
-			pInfo[playerid][pos_y], 
-			pInfo[playerid][pos_z], 
-			pInfo[playerid][player_skin], 
-			pInfo[playerid][player_name]
-		);
-		mysql_tquery(g_SQL, query);
-	}
-
-	return 1;
-}
-
-stock GetName(playerid)
-{
-	static name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof name);
-	return name;
-}
-
-stock getVehicleName(modelid)
-{
-    new string[20];
-    format(string, sizeof string, "%s", VehicleNames[modelid - 400]);
-    return string;
-}
-
-stock get_user_path()
-{
-	static path[255];
-	format(path, sizeof path, PATH_USER_FILE "%s.ini", "Fani_Annur");
-	return path;
-} 
-
 public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid){
 		case DIALOG_LOGIN: {
 			if(!response) return Kick(playerid);
-
-			new hash_password[65];
-			SHA256_PassHash(inputtext, SALT, hash_password, sizeof(hash_password));
-			if(strcmp(hash_password, pInfo[playerid][player_password]) != 0){
-				progressLogin[player_id]++;
-				if(progressLogin[player_id] > 3){
-					Kick(player_id);
+			if(response){
+				new hash_password[65];
+				SHA256_PassHash(inputtext, "", hash_password, sizeof(hash_password));
+				if(strcmp(hash_password, pInfo[playerid][player_password]) != 0){
+					progressLogin[player_id]++;
+					if(progressLogin[player_id] > 3){
+						Kick(player_id);
+					}else{
+						new info[255];
+						format(info, sizeof info, DIALOG_LOGIN_INFO, pInfo[playerid][ucp_name], pInfo[playerid][player_name]);
+						SendClientMessage(playerid, COLOR_WHITE, "password salah");
+						ShowPlayerDialog(
+							playerid,
+							DIALOG_LOGIN, 
+							DIALOG_STYLE_PASSWORD, 
+							"Login", 
+							info,
+							"Login", 
+							"Quit"
+						);
+					}
+				
 				}else{
-					SendClientMessage(playerid, COLOR_WHITE, "password salah");
-					ShowPlayerDialog(
-						playerid,
-						DIALOG_LOGIN, 
-						DIALOG_STYLE_PASSWORD, 
-						"Login Page", 
-						sprintf("{FFFFFF}Akun Server = {2EDD00} %s \n{FFFFFF}Nama = {2EDD00} %s\nMasukkan password anda", pInfo[player_id][ucp_name], pInfo[player_id][player_name]), 
-						"Login", 
-						"Quit"
-					);
+					pInfo[playerid][logged_in] = true;
+					KillTimer(pInfo[playerid][timer_id]);
+					SetSpawnInfo(playerid, 0, pInfo[playerid][player_skin], pInfo[playerid][pos_x], pInfo[playerid][pos_y], pInfo[playerid][pos_z], pInfo[playerid][facingAngle], 0, 0, 0, 0, 0, 0);
+					SpawnPlayer(playerid);
 				}
-			
-			}else{
-				new queryy[255];
-				mysql_format(g_SQL, queryy, sizeof queryy, "SELECT * FROM `view_login_in_game` WHERE nama='%e'", pInfo[playerid][player_name]);
-				mysql_tquery(g_SQL, queryy, "AssignPlayerdata", "i", playerid);
-				pInfo[playerid][logged_in] = true;
-				KillTimer(pInfo[playerid][timer_id]);
 			}
 		}
 
 		case DIALOG_REGISTER: {
 			if(!response) return Kick(playerid);
-			if(strlen(inputtext) < 8 || strlen(inputtext) > 24){
-				// SendClientMessage(playerid, COLOR_NORMAL_PLAYER, "Panjang password harus lebih dari 8 dan kurang dari 24 karakter");
-				ShowPlayerDialog(playerid,DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Login Page", sprintf("{FFFFFF}Akun Server = {2EDD00} %s \n {FFFFFF}Nama = {2EDD00} %s\n Panjang password harus lebih dari 8 dan kurang dari 24 karakter", pInfo[player_id][ucp_name], pInfo[player_id][player_name]), "Login", "Quit");
-				return 0;
-			}else{
-				SHA256_PassHash(inputtext, pInfo[playerid][player_name], pInfo[playerid][player_password], 65);
-				new query[255];
-				mysql_format(g_SQL, query, sizeof(query), "UPDATE `karakter` SET `password` = '%e' WHERE nama = '%e'", pInfo[playerid][player_password], pInfo[playerid][player_name]);
-				mysql_tquery(g_SQL, query);
-
-				SendClientMessage(playerid, COLOR_WHITE, "Berhasil mengatur password, jangan sampai lupa!");
-				SetSpawnInfo(playerid, 0, 1, 1955.33, 1343.12, 15.36, 269.15, 0, 0, 0, 0, 0, 0);
-				SpawnPlayer(playerid);
+			if(response){
+				if(strlen(inputtext) < 8 || strlen(inputtext) > 24){
+					// SendClientMessage(playerid, COLOR_NORMAL_PLAYER, "Panjang password harus lebih dari 8 dan kurang dari 24 karakter");
+					static info[255];
+					format(info, sizeof info, DIALOG_REGISTER_INFO, pInfo[player_id][ucp_name], pInfo[player_id][player_name]);
+					ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_PASSWORD, "Register", info, "Login", "Quit");
+					
+				}else{
+					SHA256_PassHash(inputtext, pInfo[playerid][player_name], pInfo[playerid][player_password], 65);
+					SendClientMessage(playerid, COLOR_WHITE, "Berhasil mengatur password, jangan sampai lupa!");
+					SetSpawnInfo(playerid, 0, 1, 1955.33, 1343.12, 15.36, 269.15, 0, 0, 0, 0, 0, 0);
+					SpawnPlayer(playerid);
+				}
 			}
 		}
 	}

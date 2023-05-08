@@ -8,4 +8,5 @@ stock Cek_akun(playerid)
 	static query[120];
 	mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM `view_login_in_game` where nama = '%e' LIMIT 1", pInfo[playerid][player_name]);
 	mysql_tquery(g_SQL, query, "onPlayerDataCheck", "i", playerid);
+	return 1;
 }
