@@ -26,6 +26,7 @@ main()
 	// write code here and run "sampctl build" to compile
 	// then run "sampctl run" to run it
 	CekConnection();
+	LoadObject();
 }
 
 public OnGameModeInit()
@@ -35,8 +36,6 @@ public OnGameModeInit()
 
 public OnPlayerConnect(playerid)
 {
-	LoadObject();
-
 	//login
 	pInfo[playerid][logged_in]	= false;
 	progressLogin[player_id]=0;

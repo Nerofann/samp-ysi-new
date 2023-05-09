@@ -12,5 +12,5 @@
 
 //Server Object module
 #include "../modules/server_object/server_object.pwn"
-#include "../modules/server_object/callback.pwn"
+#include "../modules/server_object/so_callback.pwn"
 #include "../modules/server_object/command.pwn"
