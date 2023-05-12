@@ -27,6 +27,8 @@ main()
 	// then run "sampctl run" to run it
 	CekConnection();
 	LoadObject();
+	testttt();
+	print_tes();
 }
 
 public OnGameModeInit()

@@ -34,6 +34,11 @@ new rand;
 
 #define MAX_SERVER_VEHICLES     2000
 #define MAX_PLAYER_VEHICLE      4
+#define MAX_SERVER_OBJECT       2000
+#define MAX_OBJECT_NAME         30
+#define MAX_OBJECT_DESC         50
+#define MAX_OBJECT_DATE         50
+#define NOT_ADMIN               "Logged into admins mode"
 
 //DIALOG
 enum {
@@ -43,7 +48,8 @@ enum {
 	DIALOG_STATS,
 	DIALOG_MSG_ERROR_LOGIN,
 	DIALOG_LIST_VEH,
-    DIALOG_DETAIL_VEHICLE
+    DIALOG_DETAIL_VEHICLE,
+    DIALOG_LIST_OBJECT
 }
 
 //PLayer Info
@@ -106,4 +112,4 @@ enum VehiclesData
     bool:vehStatus,
     bool:is_destroyed
 };
-// new vInfo[MAX_PLAYERS][MAX_PLAYER_VEHICLE][VehiclesData];
+new vInfo[MAX_PLAYERS][MAX_PLAYER_VEHICLE][VehiclesData];
