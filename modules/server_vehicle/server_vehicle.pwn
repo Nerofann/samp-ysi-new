@@ -90,3 +90,25 @@ public MuatKendaraanServer()
     printf("ServerVehicle Berhasil dimuat: %i", success_loaded);
     return 1;
 }
+
+
+CMD:listvs(playerid, params[])
+{
+    // if(sscanf())
+    mysql_tquery(g_SQL, "SELECT * FROM `server_vehicle`", "ShowListVS");
+    return 1;
+}
+
+forward ShowListVS();
+public ShowListVS()
+{
+    static rows;
+    cache_get_row_count(rows);
+    
+    static listt[255] = "DB_ID\tVehicle Name\tSpawned\n";
+    for(new i=0; i<rows; i++){
+        strcat(listt, "")
+    }
+
+    return 1;
+}

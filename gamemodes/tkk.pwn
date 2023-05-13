@@ -28,6 +28,10 @@ main()
 	CekConnection();
 	LoadObject();
 	LoadServerVehicle();
+
+	new Float:hasil;
+	hasil += (2 * floatsin(1618.420043, degrees));
+	printf("%f", hasil);
 }
 
 public OnGameModeInit()
