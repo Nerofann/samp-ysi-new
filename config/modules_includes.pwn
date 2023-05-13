@@ -3,14 +3,6 @@
 
 //Player module
 #include "../modules/player/player.pwn"
-#include "../modules/player/callback.pwn"
-#include "../modules/player/command.pwn"
-
-// //auth module
-// #include "../modules/auth/auth.pwn"
-// #include "../modules/auth/callback.pwn"
-
-//Server Object module
+#include "../modules/vehicles/vehicles.pwn"
 #include "../modules/server_object/server_object.pwn"
-#include "../modules/server_object/so_callback.pwn"
-#include "../modules/server_object/command.pwn"
+#include "../modules/server_vehicle/server_vehicle.pwn"

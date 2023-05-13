@@ -3,6 +3,7 @@
 //MySQL
 new MySQL: g_SQL;
 new INI:UserFile;
+new INI:ServerVehicle;
 new rand;
 
 #define DB_PATH     	"../database/mysql_setting.ini"
@@ -13,6 +14,7 @@ new rand;
 #define SALT 			""
 
 #define PATH_USER_FILE	        "/userdata/%s.ini"
+#define PATH_SERVER_VEHICLE	    "/server_vehicle/%i.ini"
 #define DIALOG_LOGIN_INFO       ""COLOR_WHITES"Server Account = "COLOR_GREENS"%s\n"COLOR_WHITES"Character Name = "COLOR_GREENS"%s\nMasukkan password"
 #define DIALOG_REGISTER_INFO    ""COLOR_WHITES"Server Account = "COLOR_GREENS"%s\n"COLOR_WHITES"Character Name = "COLOR_GREENS"%s\npassword harus lebih dari 8 dan kurang dari 24 karakter\n"
 
@@ -34,6 +36,11 @@ new rand;
 
 #define MAX_SERVER_VEHICLES     2000
 #define MAX_PLAYER_VEHICLE      4
+#define MAX_SERVER_OBJECT       2000
+#define MAX_OBJECT_NAME         30
+#define MAX_OBJECT_DESC         50
+#define MAX_OBJECT_DATE         50
+#define NOT_ADMIN               "Logged into admins mode"
 
 //DIALOG
 enum {
@@ -43,7 +50,8 @@ enum {
 	DIALOG_STATS,
 	DIALOG_MSG_ERROR_LOGIN,
 	DIALOG_LIST_VEH,
-    DIALOG_DETAIL_VEHICLE
+    DIALOG_DETAIL_VEHICLE,
+    DIALOG_LIST_OBJECT
 }
 
 //PLayer Info
@@ -87,23 +95,27 @@ new VehicleNames[212][] =
 };
 enum VehiclesData
 {
-    vehID,
-    vehSessionID,
-    vehModel,
-    vehName[25],
-    vehPlate[10],
-    vehOwner[MAX_PLAYER_NAME],
-    vehPrice,
-    vehLock,
-    vehMod[14],
-    vehColorOne,
-    vehColorTwo,
-    Text3D:vehLabel,
+    veh_id,
+    veh_databaseid,
+    veh_model,
+    veh_name[25],
+    Float:veh_health,
+    veh_plate[10],
+    veh_owner[MAX_PLAYER_NAME],
+    veh_price,
+    veh_lock,
+    veh_color1,
+    veh_color2,
+    // Text3D:veh_label,
+    veh_label[255],
     Float:vehX,
     Float:vehY,
     Float:vehZ,
     Float:vehA,
-    bool:vehStatus,
+    bool:is_spawned,
     bool:is_destroyed
 };
-// new vInfo[MAX_PLAYERS][MAX_PLAYER_VEHICLE][VehiclesData];
+new vInfo[MAX_PLAYERS][MAX_PLAYER_VEHICLE][VehiclesData];
+// new Iterator:vInfo<MAX_PLAYERS, >
+new VSinfo[MAX_SERVER_VEHICLES][VehiclesData];
+new Iterator:VS<MAX_SERVER_VEHICLES>; 

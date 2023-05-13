@@ -1,6 +1,6 @@
 {
-	"user": "Fani",
-	"repo": "samp-ysi",
+	"user": "Nerofann",
+	"repo": "samp-ysi-new",
 	"entry": "gamemodes/tkk.pwn",
 	"output": "gamemodes/tkk.amx",
 	"dependencies": [

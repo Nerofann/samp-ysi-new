@@ -40,18 +40,36 @@ stock CreateFileINI(playerid)
 
 stock SavePlayerData(playerid)
 {
-	if(pInfo[playerid][logged_in]){
-		new query[255];
-		GetPlayerPos(playerid, Float:pInfo[playerid][pos_x], Float:pInfo[playerid][pos_y], Float:pInfo[playerid][pos_z]);
-		mysql_format(g_SQL, query, sizeof(query), "UPDATE `karakter` SET `pos_x`=%f, `pos_y`=%f, `pos_z`=%f, `skin`=%i WHERE `nama`='%e'", 
-			pInfo[playerid][pos_x], 
-			pInfo[playerid][pos_y], 
-			pInfo[playerid][pos_z], 
-			pInfo[playerid][player_skin], 
-			pInfo[playerid][player_name]
-		);
-		mysql_tquery(g_SQL, query);
-	}
+	// if(pInfo[playerid][logged_in]){
+    new query[255];
+    GetPlayerPos(playerid, Float:pInfo[playerid][pos_x], Float:pInfo[playerid][pos_y], Float:pInfo[playerid][pos_z]);
+    GetPlayerFacingAngle(playerid, Float:pInfo[playerid][facingAngle]);
+
+    mysql_format(g_SQL, query, sizeof(query), "UPDATE `karakter` SET `pos_x`=%f, `pos_y`=%f, `pos_z`=%f, `facingAngle`=%f `skin`=%i WHERE `nama`='%e'", 
+        pInfo[playerid][pos_x], 
+        pInfo[playerid][pos_y], 
+        pInfo[playerid][pos_z], 
+        pInfo[playerid][facingAngle], 
+        pInfo[playerid][player_skin], 
+        pInfo[playerid][player_name]
+    );
+    mysql_tquery(g_SQL, query);
+	// }
+
+    //save ke file.ini
+    static filename[255];
+    format(filename, sizeof filename, PATH_USER_FILE, GetName(playerid));
+    UserFile = INI_Open(filename);
+	INI_WriteFloat(UserFile, "facingAngle", pInfo[playerid][facingAngle]);
+	INI_WriteFloat(UserFile, "posZ", pInfo[playerid][pos_z]);
+	INI_WriteFloat(UserFile, "posY", pInfo[playerid][pos_y]);
+	INI_WriteFloat(UserFile, "posX", pInfo[playerid][pos_x]);
+	INI_WriteInt(UserFile, "money", pInfo[playerid][money]);
+	INI_WriteInt(UserFile, "skin", rand);
+    INI_WriteInt(UserFile, "level", 1);
+    INI_WriteString(UserFile, "nama", GetName(playerid));
+	INI_SetTag(UserFile, "data");
+    INI_Close(UserFile);
 
 	return 1;
 }
