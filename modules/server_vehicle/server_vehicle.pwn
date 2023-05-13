@@ -63,17 +63,17 @@ public MuatKendaraanServer()
             cache_get_value_name_int(i, "veh_color1", VSinfo[id][veh_color1]);
             cache_get_value_name_int(i, "veh_color2", VSinfo[id][veh_color2]);
             cache_get_value_name(i, "veh_label", VSinfo[id][veh_label]);
-            cache_get_value_name_float(i, "VehX", VSinfo[id][vehX]);
-            cache_get_value_name_float(i, "VehY", VSinfo[id][vehY]);
-            cache_get_value_name_float(i, "VehZ", VSinfo[id][vehZ]);
-            cache_get_value_name_float(i, "VehA", VSinfo[id][vehA]);
+            cache_get_value_name_float(i, "vehX", VSinfo[id][vehX]);
+            cache_get_value_name_float(i, "vehY", VSinfo[id][vehY]);
+            cache_get_value_name_float(i, "vehZ", VSinfo[id][vehZ]);
+            cache_get_value_name_float(i, "vehA", VSinfo[id][vehA]);
             cache_get_value_name_int(i, "is_spawned", VSinfo[id][is_spawned]);
             cache_get_value_name_int(i, "is_destroyed", VSinfo[id][is_destroyed]);
 
             Iter_Add(VS, id);
 
             VSinfo[id][veh_databaseid] = id;
-            VSinfo[id][veh_id] = CreateVehicle(VSinfo[id][veh_model], VSinfo[id][vehX], VSinfo[id][vehY], VSinfo[id][vehZ], VSinfo[id][vehA], -1, -1, 30);
+            VSinfo[id][veh_id] = CreateVehicle(VSinfo[id][veh_model], VSinfo[id][vehX], VSinfo[id][vehY], VSinfo[id][vehZ], 0, -1, -1, -1);
 
             if(!fexist(GetServerVehiclePath(id))){
                 CreateServerVehicle_INI(id);
