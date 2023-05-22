@@ -20,6 +20,15 @@ CMD:setskin(playerid, params[]){
     return 1;
 }
 
+CMD:pos(playerid, params[]){
+	new Float:x,Float:y, Float:z;
+	GetPlayerPos(playerid, Float:x, Float:y, Float:z);
+
+	printf("%f, %f, %f", x, y, z);
+
+	return 1;
+}
+
 // Callback for player
 forward AssignPlayerdata(playerid); 
 public AssignPlayerdata(playerid)
